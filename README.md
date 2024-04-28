@@ -193,9 +193,10 @@ void SendSMS()
 <li>The code begins by assigning the various components (LCD, gas sensor, flame sensor, emergency LEDs, etc.) to specific Arduino pins. The LiquidCrystal object is initialized to interface with the LCD screen, and the SoftwareSerial object is initialized to communicate with the GSM module for sending SMS alerts.</li>
 <li>The setup() function sets the pin modes for all inputs and outputs. This function also initializes the LCD and serial communication at a 9600 baud rate. It also sets default states for certain actuators, like connecting the main building's electricity (LOAD) and activating the gas valve.</li>
 
+<h4>Main Functionality in the Loop</h4>
+
 <p>The loop() function continuously checks the status of the gas and flame sensors to determine if there is a hazardous condition. If either the flame or gas sensor is activated, the program initiates a series of safety measures, including:
 
-<h4>Main Functionality in the Loop</h4>
 <ul style="list-style-type: circle">
   <li>Displaying alerts on the LCD screen.</li>
   <li>Activating an emergency alarm and LED to indicate danger.</li>
@@ -204,4 +205,3 @@ void SendSMS()
   <li>Activating the fire extinguishing valve and an exhaust fan to mitigate fire and gas hazards.</li>
   <li>Sending an SMS notification using the SendSMS() function.</li>
 </ul>
-</p>
