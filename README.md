@@ -204,7 +204,7 @@ void SendSMS()
 1. The loop() function continuously checks the status of the gas and flame sensors to determine if there is a hazardous condition. If either the flame or gas sensor is activated, the program initiates a series of safety measures, including:
 
 <ul style="list-style-type: circle">
-  <li>Displaying alerts on the LCD screen.</li>
+  <li style="margin-right: 7px">Displaying alerts on the LCD screen.</li>
   <li>Activating an emergency alarm and LED to indicate danger.</li>
   <li>Deactivating the main power source to reduce risk.</li>
   <li>Closing the gas valve to stop gas flow.</li>
