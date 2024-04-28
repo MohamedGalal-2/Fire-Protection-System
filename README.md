@@ -214,4 +214,5 @@ void SendSMS()
 
 2. If no hazards are detected, the system resets to a safe state, reconnecting power, reopening the gas valve, and deactivating the emergency measures.
 3. The loop also includes a timed refresh for the LCD to clear and display a default message ("It's all good") when no hazards are detected.
+4. The SendSMS() function sends an SMS notification to a predefined number. It sends the message once and sets a timer to prevent repeated SMS notifications during the same incident.
 </div>
