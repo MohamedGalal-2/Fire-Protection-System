@@ -59,263 +59,131 @@ Continuous monitoring and real-time feedback are also central to the project's o
 
 ```c
 
-// password based door lock system in 8051 microprocessor
+// Fire Protection System Using Arduino Mega
 
-#include <reg51.h>
+/* Includes Section*/
+#include <Wire.h>
+#include <SoftwareSerial.h>
+#include "LiquidCrystal.h"
 
-// connected pins
-// keypad rows
-sbit keyrow1 = P2 ^ 0;
-sbit keyrow2 = P2 ^ 1;
-sbit keyrow3 = P2 ^ 2;
-sbit keyrow4 = P2 ^ 3;
-//keypad column
-sbit keycolumn1 = P3 ^ 0;
-sbit keycolumn2 = P3 ^ 1;
-sbit keycolumn3 = P3 ^ 2;
+// Initialize the library by associating any needed LCD interface pin
+// with the arduino pin number it is connected to
+const int rs = 53, en = 52, d4 = 51, d5 = 50, d6 = 49, d7 = 48;   
+LiquidCrystal lcd(rs, en, d4, d5, d6, d7);                       
 
-// motor pins
-sbit motorpin1 = P3 ^ 3;
-sbit motorpin2 = P3 ^ 4;
+// Initialize an object from the class SoftwareSerial
+SoftwareSerial sim800l(0, 1);       
 
-// led pins
-sbit rs = P3 ^ 5;
-sbit rw = P3 ^ 6;
-sbit en = P3 ^ 7;
+/* Variables Section*/
+#define Gas_Sensor_Output 22    // The output signal of the gas detector
+#define Flame_Sensor_Output 23  // The output signal of the flame sensor
+#define Emergency_LED 24
+#define Emergency_Alarm 25
+#define ELECTRIC_GAS_VALVE 26
+#define FIRE_EXTINGUISHING_VALVE 27
+#define Emergency_Exhaust_Fan 28
+#define LOAD 29
 
-//functions
-void lcdcmd(unsigned char);
-void lcddat(unsigned char);
-void lcddisplay(unsigned char *q);
-char keypad();
-void check();
-void delay(unsigned int);
-unsigned char pin[] = {"12345"};
-unsigned char Epin[5];
+unsigned long lcdTimer = 0;
+unsigned long lcdInterval = 500;
+unsigned long smsTimer = 0;
+bool Flame_Sensor_state;
+bool Gas_Sensor_state;
 
-// main function
-void main()
+void setup() {
+  /* Setting Pin Modes */
+  pinMode(Flame_Sensor_Output, INPUT);
+  pinMode(Gas_Sensor_Output, INPUT);
+  pinMode(Emergency_Alarm, OUTPUT);
+  pinMode(Emergency_LED, OUTPUT);
+  pinMode(ELECTRIC_GAS_VALVE, OUTPUT);
+  pinMode(FIRE_EXTINGUISHING_VALVE, OUTPUT);
+  pinMode(Emergency_Exhaust_Fan, OUTPUT);
+  pinMode(LOAD, OUTPUT);
+
+  digitalWrite(LOAD, HIGH);                 // Connect the main building's electricity.
+  digitalWrite(ELECTRIC_GAS_VALVE, HIGH);   // Activate the main gas valve
+
+  // set up the LCD's number of columns and rows:
+  lcd.begin(16, 2);
+  // Print a message to the LCD.
+  lcd.print("It's All good");
+
+  // Begin the serial connection with baud rate 9600
+  sim800l.begin(9600);
+  Serial.begin(9600);
+
+}
+
+void loop() 
 {
-    lcdcmd(0x0F); //decimal value: 15
-    lcdcmd(0x38); //decimal value: 56
-    lcdcmd(0x01); //decimal value: 1
+  Flame_Sensor_state = digitalRead(Flame_Sensor_Output);  // Check the output signal of the flame sensor.
+  Gas_Sensor_state = digitalRead(Gas_Sensor_Output);      // Check the output signal of the gas sensor.
 
-    while (1)
+  // If the flame is detected
+  if (Flame_Sensor_state == HIGH) 
+  {
+    /* Display on the LCD "Flame Detected!!"*/
+    lcd.setCursor(0, 0);
+    lcd.print("Fire Alert!!!!");
+    lcd.setCursor(0, 1);
+    lcd.print("Flame Detected!!");
+
+    digitalWrite(Emergency_Alarm, HIGH);            // Activate the emergency alarm.
+    digitalWrite(Emergency_LED, HIGH);              // Activate the emergency alarm.
+    digitalWrite(LOAD, LOW);                        // Disconnect the building's primary power source.
+    digitalWrite(ELECTRIC_GAS_VALVE, LOW);          // Shut down the main gas valve to stop gas flow.
+    digitalWrite(FIRE_EXTINGUISHING_VALVE, HIGH);   // Activate the extinguishing valve to put down the fire.
+    digitalWrite(Emergency_Exhaust_Fan, HIGH);      // Activate an emergency high-pressure exhaust fan to remove leakage gas.
+    SendSMS();                                      // GSM & GPS module to send notification and position to the firefighter and authority.
+  } 
+  else if (Gas_Sensor_state == HIGH) 
+  {
+    /* Display on the LCD "Gas Detected!!"*/
+    lcd.setCursor(0, 0);
+    lcd.print("Fire Alert!!!!");
+    lcd.setCursor(0, 1);
+    lcd.print("Gas Detected!!");
+
+    digitalWrite(Emergency_Alarm, HIGH);            // Activate the emergency alarm.
+    digitalWrite(Emergency_LED, HIGH);              // Activate the emergency alarm.
+    digitalWrite(ELECTRIC_GAS_VALVE, LOW);          // Shut down the main gas valve to stop gas flow.
+    digitalWrite(Emergency_Exhaust_Fan, HIGH);      // Activate an emergency high-pressure exhaust fan to remove leakage gas.
+    SendSMS();                                      // GSM & GPS module to send notification and position to the firefighter and authority.
+  }
+  else 
+  {
+    digitalWrite(Emergency_Alarm, LOW);             // Deactivate the emergency alarm.
+    digitalWrite(Emergency_LED, LOW);               // Deactivate the emergency alarm.
+    digitalWrite(LOAD, HIGH);                       // Connect the building's primary power source.
+    digitalWrite(ELECTRIC_GAS_VALVE, HIGH);         // Open the main gas valve to stop gas flow.
+    digitalWrite(FIRE_EXTINGUISHING_VALVE, LOW);    // Deactivate the extinguishing valve to put down the fire.
+    digitalWrite(Emergency_Exhaust_Fan, LOW);       // Deactivate an emergency high-pressure exhaust fan to remove leakage gas.
+    smsTimer = 0;                                   // Sets the smsTimer to 0;
+
+    if (millis() - lcdTimer >= lcdInterval) 
     {
-        unsigned int i = 0;
-        lcdcmd(0x80); //decimal value: 128
-        lcddisplay("ENTER PIN NUMBER");
-        delay(1000);
-        lcdcmd(0xc0); //decimal value: 192
-        while (pin[i] != '\0')
-        {
-            Epin[i] = keypad();
-            delay(1000);
-            i++;
-        }
-        check();
+      lcd.clear();
+      lcdTimer = millis();
+      lcd.setCursor(0, 0);
+      lcd.print("It's all good");
     }
+  }
 }
 
-//delay function
-void delay(unsigned int j)
+void SendSMS() 
 {
-    int a, b;
-    for (a = 0; a < j; a++)
-    {
-        for (b = 0; b < 10; b++)
-            ;
-    }
+  if(smsTimer == 0)
+  {
+    Serial.println("Sending Location...");
+    sim800l.print("AT+CMGF=1\r");
+    sim800l.print("AT+CMGS=\"180\"\r");
+    sim800l.print("SIM8001 is working");
+    sim800l.println();
+    Serial.println("Location Sent.");
+    smsTimer = millis();
+  }
 }
-
-// lcd commands functions
-void lcdcmd(unsigned char A)
-{
-    P1 = A;
-    rs = 0;
-    rw = 0;
-    en = 1;
-    delay(1000);
-    en = 0;
-}
-
-//lcd data function
-
-void lcddat(unsigned char i)
-{
-    P1 = i;
-    rs = 1;
-    rw = 0;
-    en = 1;
-    delay(1000);
-    en = 0;
-}
-
-//lcd display charecters function
-
-void lcddisplay(unsigned char *q)
-{
-    int k;
-    for (k = 0; q[k] != '\0'; k++)
-    {
-        lcddat(q[k]);
-    }
-    delay(10000);
-}
-
-// assign keypad character value function
-
-char keypad()
-{
-    int x = 0;
-    while (x == 0)
-    {
-        // assign values for first row
-        keyrow1 = 0;
-        keyrow2 = 1;
-        keyrow3 = 1;
-        keyrow4 = 1;
-        if (keycolumn1 == 0)
-        {
-            lcddat('*');
-            delay(1000);
-            x = 1;
-            return '1';
-        }
-        if (keycolumn2 == 0)
-        {
-            lcddat('*');
-            delay(1000);
-            x = 1;
-            return '2';
-        }
-        if (keycolumn3 == 0)
-        {
-            lcddat('*');
-            delay(1000);
-            x = 1;
-            return '3';
-        }
-        // assign values for second row
-        keyrow1 = 1;
-        keyrow2 = 0;
-        keyrow3 = 1;
-        keyrow4 = 1;
-
-        if (keycolumn1 == 0)
-        {
-            lcddat('*');
-            delay(1000);
-            x = 1;
-            return '4';
-        }
-        if (keycolumn2 == 0)
-        {
-            lcddat('*');
-            delay(1000);
-            x = 1;
-            return '5';
-        }
-        if (keycolumn3 == 0)
-        {
-            lcddat('*');
-            delay(1000);
-            x = 1;
-            return '6';
-        }
-
-        // assign values for third row
-        keyrow1 = 1;
-        keyrow2 = 1;
-        keyrow3 = 0;
-        keyrow4 = 1;
-        if (keycolumn1 == 0)
-        {
-            lcddat('*');
-            delay(1000);
-            x = 1;
-            return '7';
-        }
-        if (keycolumn2 == 0)
-        {
-            lcddat('*');
-            delay(1000);
-            x = 1;
-            return '8';
-        }
-        if (keycolumn3 == 0)
-        {
-            lcddat('*');
-            delay(1000);
-            x = 1;
-            return '9';
-        }
-
-        // assign values for forth row
-        keyrow1 = 1;
-        keyrow2 = 1;
-        keyrow3 = 1;
-        keyrow4 = 0;
-
-        if (keycolumn1 == 0)
-        {
-            lcddat('*');
-            delay(1000);
-            x = 1;
-            return '*';
-        }
-        if (keycolumn2 == 0)
-        {
-            lcddat('*');
-            delay(1000);
-            x = 1;
-            return '0';
-        }
-        if (keycolumn3 == 0)
-        {
-            lcddat('*');
-            delay(1000);
-            x = 1;
-            return '#';
-        }
-    }
-}
-
-// password check function and run the door motor
-
-void check()
-{
-    //  compare the input value with the assign password value
-    if (pin[0] == Epin[0] && pin[1] == Epin[1] && pin[2] == Epin[2] && pin[3] == Epin[3] && pin[4] == Epin[4])
-    {
-        delay(1000);
-        lcdcmd(0x01); //decimal value: 1
-        lcdcmd(0x81); //decimal value: 129
-        // show pin is correct
-        lcddisplay("PIN CORRECT");
-        delay(1000);
-        // door motor will run
-        motorpin1 = 1;
-        motorpin2 = 0;
-        lcdcmd(0xc1); //decimal value: 193
-        // show the door is unlocked
-        lcddisplay("DOOR OPENED");
-        delay(10000);
-        motorpin1 = 1;
-        motorpin2 = 0;
-        lcdcmd(0x01); //decimal value: 1
-    }
-    else
-    {
-        lcdcmd(0x01); //decimal value: 1
-        lcdcmd(0x80); //decimal value: 128
-        lcddisplay("WRONG PIN");
-        delay(1000);
-        lcdcmd(0x01); //decimal value: 1
-    }
-}
-
-// end
 ```
 
 ### Discussion:
