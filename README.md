@@ -211,4 +211,7 @@ void SendSMS()
   <li>Activating the fire extinguishing valve and an exhaust fan to mitigate fire and gas hazards.</li>
   <li>Sending an SMS notification using the SendSMS() function.</li>
 </ul>
+
+<p>If no hazards are detected, the system resets to a safe state, reconnecting power, reopening the gas valve, and deactivating the emergency measures.</p>
+<p>The loop also includes a timed refresh for the LCD to clear and display a default message ("It's all good") when no hazards are detected.</p>
 </div>
