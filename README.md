@@ -10,7 +10,6 @@
 - [Schematic Circuit Diagram](#Schematic-Circuit-Diagram)
 - [Project Code](#Project-Code)
 - [Discussion](#Discussion)
-- [Licence](https://github.com/MohamedGalal-2/Fire-Protection-System/blob/main/LICENSE)
   
 ### Software requirements
 
