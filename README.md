@@ -201,7 +201,7 @@ void SendSMS()
 <div> 
 <h4>Main Functionality in the Loop</h4>
    
-<p><ol><li>The loop() function continuously checks the status of the gas and flame sensors to determine if there is a hazardous condition. If either the flame or gas sensor is activated, the program initiates a series of safety measures, including:</li></ol>
+1. The loop() function continuously checks the status of the gas and flame sensors to determine if there is a hazardous condition. If either the flame or gas sensor is activated, the program initiates a series of safety measures, including:
 
 <ul style="list-style-type: circle">
   <li>Displaying alerts on the LCD screen.</li>
@@ -212,6 +212,6 @@ void SendSMS()
   <li>Sending an SMS notification using the SendSMS() function.</li>
 </ul>
 
-<p>If no hazards are detected, the system resets to a safe state, reconnecting power, reopening the gas valve, and deactivating the emergency measures.</p>
-<p>The loop also includes a timed refresh for the LCD to clear and display a default message ("It's all good") when no hazards are detected.</p>
+2. If no hazards are detected, the system resets to a safe state, reconnecting power, reopening the gas valve, and deactivating the emergency measures.
+3. The loop also includes a timed refresh for the LCD to clear and display a default message ("It's all good") when no hazards are detected.
 </div>
