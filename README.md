@@ -1,11 +1,22 @@
 # Fire Protection System using Arduino Mega
 
+## Table of Contents
+- [Software requirements](#Software-requirements)
+- [Hardware requirements](#Hardware-requirements)
+- [Objective](#Objective)
+- [Applications](#Applications)
+- [Block Diagram](#Block-Diagram)
+- [Working Procedures](#Working-Procedures)
+- [Schematic Circuit Diagram](#Schematic-Circuit-Diagram)
+- [Project Code](#Project-Code)
+- [Discussion](#Discussion)
+  
 ### Software requirements
 
 - Proteus (for circuit diagram and simulation)
 - Arduino IDE (for Arduino code)
 
-### Hardware requirements:
+### Hardware requirements
 - Arduino Mega
 - GSM & GPRS Module | SIM800L
 - Gas Sensor | MQ-2
@@ -17,7 +28,7 @@
 - LED
 - 330ohm Resistor
   
-### Objective: 
+### Objective 
 
 <p> The objectives of the microcontroller-based fire safety system project in an industrial setting can be divided into key areas to ensure comprehensive safety and functionality. The primary aim is to create a robust system that detects fire hazards early and initiates appropriate safety responses.
 
@@ -30,32 +41,32 @@ Sending alerts and notifications to key personnel and local emergency services i
 Continuous monitoring and real-time feedback are also central to the project's objectives. The system must continuously monitor the industrial environment, providing real-time information to operators. This capability allows for quick action and evacuation if needed, contributing to a safer workplace.</p>
 
 
-### Applications: 
+### Applications
 
 <p>The applications of a microcontroller-based fire safety system extend across various industrial and commercial settings. This technology can be used to enhance safety, prevent disasters, and protect both human lives and valuable assets.</p>
 
-### Block Diagram:
+### Block Diagram
 
 ![Block Diagram](https://i.imgur.com/ZdFKOng.png)
 
 <p><b>Fig: System Block Diagram</b></p>
 
 
-### Working Procedures:
+### Working Procedures
 1.	The main component in the circuit is the Arduino Mega. It control everything.
 2.	When the system is powered on it automatically starts to sense the environment for toxic gas or flames.
 3.	The sensors will send these data to Arduino Mega. Arduino Mega will examine them according to the installed program.
 4.	If the flame is detected the system will activate the emergency alarm, disconnect the building's primary power source, shut down the main gas valve to stop gas flow, activate an emergency high-pressure exhaust fan to remove leakage gas, and GSM & GPS module to send notification and position to the firefighter and authority.
 5.	During gas leakage the gas valve will be shut off, the alarm & exhaust fan will be activated and notification will be sent.
 
-### Schematic Circuit Diagram:
+### Schematic Circuit Diagram
 
 ![Schematic Circuit Diagram](https://i.imgur.com/fj7g2FP.png)
 
 <p>Fig: Schematic Circuit Diagram</p>
 
 
-### Project Code:
+### Project Code
 
 ```c
 
@@ -186,7 +197,7 @@ void SendSMS()
 }
 ```
 
-### Discussion:
+### Discussion
 
 <div>
 
