@@ -192,6 +192,7 @@ void SendSMS()
 The setup() function sets the pin modes for all inputs and outputs. This function also initializes the LCD and serial communication at a 9600 baud rate. It also sets default states for certain actuators, like connecting the main building's electricity (LOAD) and activating the gas valve.</p>
 
 <p>The loop() function continuously checks the status of the gas and flame sensors to determine if there is a hazardous condition. If either the flame or gas sensor is activated, the program initiates a series of safety measures, including:
+<h1>Main Functionality in the Loop<h1>
 <ul style="list-style-type: circle">
   <li>Displaying alerts on the LCD screen.</li>
   <li>Activating an emergency alarm and LED to indicate danger.</li>
