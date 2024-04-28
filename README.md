@@ -36,7 +36,7 @@ Continuous monitoring and real-time feedback are also central to the project's o
 
 ### Block Diagram:
 
-![Block Diagram]([https://i.imgur.com/uV6oYkP.png](https://imgur.com/a/I1vOmqW))
+![Block Diagram](https://imgur.com/a/I1vOmqW))
 
 <p>Fig: System Block Diagram</p>
 
