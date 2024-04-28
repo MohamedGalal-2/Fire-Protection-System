@@ -1,6 +1,6 @@
 # Fire Protection System using Arduino Mega
 
-### software requirements
+### Software requirements
 
 - Proteus (for circuit diagram and simulation)
 - Arduino IDE (for Arduino code)
