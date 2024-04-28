@@ -1,19 +1,35 @@
-# Password-based-doorlock-system-in-8051-microprocessor
+# Fire Protection System using Arduino Mega
 
 ### software requirements
 
 - Proteus (for circuit diagram and simulation)
-- Keil uVision5 IDE (for c code)
+- Arduino IDE (for Arduino code)
 
 ### Hardware requirements:
-- 8051 microcontroller (80C51)
-- Phone keypad
-- LCD – LM016L
+- Arduino Mega
+- GSM & GPRS Module | SIM800L
+- Gas Sensor | MQ-2
+- Flame Sensor
+- LCD | LM016L
+- Speaker
+- Relay
+- 3 DC Motors
+- LED
+- 330ohm Resistor
+
 - DC Motor (re-present as a door-lock motor)
   
 ### Objective: 
 
-<p> Safety is the most crucial concern of human. We always try to keep our things between ourselves. For this reason, we still use various methods to lock our precious items like a locked diary. And when it comes to our daily life, we are more serious. In the modern age, there are so many ways to lock the door; one of them is password-based lock system—a system where you are the only one to know how to access it. It saves our daily life from the various malicious problem like a thief. This system will give us the security that we want. To make our life more secure, we are going to build the password-based door lock system. This system is easy to assemble and very easy to use in our daily life. Anyone can use it to secure themselves.</p>
+<p> The objectives of the microcontroller-based fire safety system project in an industrial setting can be divided into key areas to ensure comprehensive safety and functionality. The primary aim is to create a robust system that detects fire hazards early and initiates appropriate safety responses.
+
+One of the main objectives is to provide fire detection and prevention. This involves using sensors to monitor for smoke, gas leaks, and other indicators of fire risk. By implementing this early warning system, the goal is to identify potential hazards before they escalate into larger incidents.
+
+The second objective is to establish automated safety responses. Once a fire hazard is detected, the system should automatically shut off the main power source, close gas valves, and activate fire suppression systems. This automated response is designed to minimize damage and contain the hazard, thereby ensuring the safety of workers and reducing property damage.
+
+Sending alerts and notifications to key personnel and local emergency services is another crucial objective. By providing immediate alerts to managers, safety officers, and nearby fire stations, the system ensures a rapid response from both internal and external resources. This objective enhances communication and coordination during emergencies.
+
+Continuous monitoring and real-time feedback are also central to the project's objectives. The system must continuously monitor the industrial environment, providing real-time information to operators. This capability allows for quick action and evacuation if needed, contributing to a safer workplace.</p>
 
 
 ### Applications: 
