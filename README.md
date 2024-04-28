@@ -42,21 +42,15 @@ Continuous monitoring and real-time feedback are also central to the project's o
 
 
 ### Working Procedures:
-1.	The main component in the circuit is 8051 microcontrollers. This control everything in the device.
-2.	We connect the 4x3 keypad with the microcontroller. In the keypad there is 4 rows which is indicated the letters (A-D) and the 3 columns which is indicated the number (1-3).
-3.	In the 8051 controller, pin P2.0 to P2.3 are connected to the keypad rows and pin P3.0 to P3.2 are connected to the keypad columns.
-4.	Then we connect the door lock motor pins in the P3.3 and P3.4. This motor only work when the password is right.
-5.	LCD’s points are connected with P3.5 to P3.7 in 8051.  LCD help us to show the inputs and error messages.
-6.	All devices are connected with each other. In the simulation we use the hex code to run the program. The hex code is generated from the embedded C code. This code only works on any 8051-microcontroller system. 
-7.	To run the simulation, we set the clock frequency at 11.0592 MHZ for 8051. This is allowed us to run the simulation without getting any errors.
-8.	We pre-define the password 12345 for the program.
-9.	If user input wrong password it will give another chance to input the password again with an error message. When the password is right it will show the welcome message and lock motor will move to open the door.
-
-
+1.	The main component in the circuit is the Arduino Mega. It control everything.
+2.	When the system is powered on it automatically starts to sense the environment for toxic gas or flames.
+3.	The sensors will send these data to Arduino Mega. Arduino Mega will examine them according to the installed program.
+4.	If the flame is detected the system will activate the emergency alarm, disconnect the building's primary power source, shut down the main gas valve to stop gas flow, activate an emergency high-pressure exhaust fan to remove leakage gas, and GSM & GPS module to send notification and position to the firefighter and authority.
+5.	During gas leakage the gas valve will be shut off, the alarm & exhaust fan will be activated and notification will be sent.
 
 ### Schematic Circuit Diagram:
 
-![Schematic Circuit Diagram](https://i.imgur.com/stAXULK.png)
+![Schematic Circuit Diagram](https://i.imgur.com/fj7g2FP.png)
 
 <p>Fig: Schematic Circuit Diagram</p>
 
