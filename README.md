@@ -32,7 +32,7 @@ Continuous monitoring and real-time feedback are also central to the project's o
 
 ### Applications: 
 
-<p>The password-based lock system can install any door of any rooms. This system also can be integrated with the existing system. This electric combination lock system uses a five-digit password. The system collects five-digit user input and compares the user input with the preset password inside the program. If the password matches, access will be granted, and if not match the entry will be denied. The system can be used at residential places to ensure better safety. It can be used at organizations to ensure authorized access to highly secured places.</p>
+<p>The applications of a microcontroller-based fire safety system extend across various industrial and commercial settings. This technology can be used to enhance safety, prevent disasters, and protect both human lives and valuable assets.</p>
 
 ### Block Diagram:
 
