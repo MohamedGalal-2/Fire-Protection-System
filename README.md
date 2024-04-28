@@ -16,8 +16,6 @@
 - 3 DC Motors
 - LED
 - 330ohm Resistor
-
-- DC Motor (re-present as a door-lock motor)
   
 ### Objective: 
 
