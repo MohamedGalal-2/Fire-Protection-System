@@ -10,6 +10,7 @@
 - [Schematic Circuit Diagram](#Schematic-Circuit-Diagram)
 - [Project Code](#Project-Code)
 - [Discussion](#Discussion)
+- [Licence](#License)
   
 ### Software requirements
 
@@ -227,3 +228,6 @@ void SendSMS()
 3. The loop also includes a timed refresh for the LCD to clear and display a default message ("It's all good") when no hazards are detected.
 4. The SendSMS() function sends an SMS notification to a predefined number. It sends the message once and sets a timer to prevent repeated SMS notifications during the same incident.
 </div>
+
+### License
+This repository is licensed under the MIT License. Please see the LICENSE file for more information
