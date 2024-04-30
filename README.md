@@ -10,6 +10,7 @@
 - [Schematic Circuit Diagram](#Schematic-Circuit-Diagram)
 - [Project Code](#Project-Code)
 - [Discussion](#Discussion)
+- [Licence](#License)
   
 ### Software requirements
 
@@ -69,8 +70,7 @@ Continuous monitoring and real-time feedback are also central to the project's o
 ### Project Code
 
 ```c
-
-// Fire Protection System Using Arduino Mega
+// Fire Protection System using Arduino Mega
 
 /* Includes Section*/
 #include <Wire.h>
@@ -134,11 +134,7 @@ void loop()
   // If the flame is detected
   if (Flame_Sensor_state == HIGH) 
   {
-    /* Display on the LCD "Flame Detected!!"*/
-    lcd.setCursor(0, 0);
-    lcd.print("Fire Alert!!!!");
-    lcd.setCursor(0, 1);
-    lcd.print("Flame Detected!!");
+    SendSMS();                                      // GSM & GPS module to send notification and position to the firefighter and authority.
 
     digitalWrite(Emergency_Alarm, HIGH);            // Activate the emergency alarm.
     digitalWrite(Emergency_LED, HIGH);              // Activate the emergency alarm.
@@ -146,21 +142,27 @@ void loop()
     digitalWrite(ELECTRIC_GAS_VALVE, LOW);          // Shut down the main gas valve to stop gas flow.
     digitalWrite(FIRE_EXTINGUISHING_VALVE, HIGH);   // Activate the extinguishing valve to put down the fire.
     digitalWrite(Emergency_Exhaust_Fan, HIGH);      // Activate an emergency high-pressure exhaust fan to remove leakage gas.
-    SendSMS();                                      // GSM & GPS module to send notification and position to the firefighter and authority.
-  } 
-  else if (Gas_Sensor_state == HIGH) 
-  {
-    /* Display on the LCD "Gas Detected!!"*/
+    
+    /* Display on the LCD "Flame Detected!!"*/
     lcd.setCursor(0, 0);
     lcd.print("Fire Alert!!!!");
     lcd.setCursor(0, 1);
-    lcd.print("Gas Detected!!");
+    lcd.print("Flame Detected!!");
+  } 
+  else if (Gas_Sensor_state == HIGH) 
+  {
+    SendSMS();                                      // GSM & GPS module to send notification and position to the firefighter and authority.
 
     digitalWrite(Emergency_Alarm, HIGH);            // Activate the emergency alarm.
     digitalWrite(Emergency_LED, HIGH);              // Activate the emergency alarm.
     digitalWrite(ELECTRIC_GAS_VALVE, LOW);          // Shut down the main gas valve to stop gas flow.
     digitalWrite(Emergency_Exhaust_Fan, HIGH);      // Activate an emergency high-pressure exhaust fan to remove leakage gas.
-    SendSMS();                                      // GSM & GPS module to send notification and position to the firefighter and authority.
+
+    /* Display on the LCD "Gas Detected!!"*/
+    lcd.setCursor(0, 0);
+    lcd.print("Fire Alert!!!!");
+    lcd.setCursor(0, 1);
+    lcd.print("Gas Detected!!");
   }
   else 
   {
@@ -227,3 +229,6 @@ void SendSMS()
 3. The loop also includes a timed refresh for the LCD to clear and display a default message ("It's all good") when no hazards are detected.
 4. The SendSMS() function sends an SMS notification to a predefined number. It sends the message once and sets a timer to prevent repeated SMS notifications during the same incident.
 </div>
+
+### License
+This repository is licensed under the MIT License. Please see the LICENSE file for more information
